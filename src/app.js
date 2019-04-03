@@ -1,14 +1,15 @@
 "use strict";
 let EnumEnvironments = require("./EnumEnvironments.js");
 let EnumServerTypes = require("./EnumServerTypes.js");
+let ServerData = require("./ServerData.js");
 
 let dgram = require("dgram");
 
-let DEFAULT_SERVERDATA;
-let PORT = 27016;
+const DEFAULT_SERVERDATA = new ServerData();
+const PORT = 27016;
+const SOCKET = dgram.createSocket("udp4");
 
 let init = function() {
-    DEFAULT_SERVERDATA = new ServerData();
     DEFAULT_SERVERDATA.hostname = "[Lambda-Soft] Mari0 Kart 64";
     DEFAULT_SERVERDATA.gamename = "Mario Kart 64";
     DEFAULT_SERVERDATA.mapname = "Rainbow Road";
@@ -16,10 +17,14 @@ let init = function() {
     DEFAULT_SERVERDATA.maxplayers = 8;
     DEFAULT_SERVERDATA.isVAC = false;
     DEFAULT_SERVERDATA.isPrivate = true;
+    DEFAULT_SERVERDATA.botcount = 6;
 
-    let sckt = dgram.createSocket("udp4");
-    sckt.bind(PORT);
-    sckt.addListener("message", onPacket);
+    SOCKET.on("message", onPacket);
+    SOCKET.on("listening", () => {
+        let addr = SOCKET.address();
+        console.log(`Started listening on ${addr.address}:${addr.port}`)
+    })
+    SOCKET.bind(PORT);
 }
 
 let onPacket = function(msg, remote) {
@@ -33,7 +38,7 @@ let onPacket = function(msg, remote) {
 }
 
 let handlePacket = function(pckt, remote) {
-    let sckt = dgram.createSocket("udp4");
+    let sckt = SOCKET;
     if(pckt.startsWith("TSource Engine Query")) {
         let toSend = constructQueryPacketByServerData(DEFAULT_SERVERDATA);
         sckt.send(toSend, remote.port, remote.address, (e, b) => {
@@ -102,24 +107,5 @@ let constructQueryPacket = function(hostname, mapname, gamename,
 
     return Buffer.from(pckt);
 }
-
-
-class ServerData {
-    constructor() { 
-        this.hostname = "Default Hostname";
-        this.mapname = "Default Mapname";
-        this.gamename = "Default Gamename";
-        this.foldername = "";
-        this.appid = 730;
-        this.playercount = 0;
-        this.maxplayers = 255;
-        this.botcount = 0;
-        this.environment = EnumEnvironments.WINDOWS;
-        this.servertype = EnumServerTypes.DEDICATED;
-        this.isPrivate = false;
-        this.isVAC = true;
-    }
-}
-
 
 init();
