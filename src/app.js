@@ -50,7 +50,7 @@ let constructQueryPacket = function(hostname, mapname, gamename,
     foldername, appid, playercount, maxplayers, botcount, environment, servertype, 
     isPrivate, isVAC) {
     
-    let pckt = Buffer.alloc(6 + hostname.length + 1 + mapname.length + 1 + foldername.length + 1 + gamename.length + 1 + 2 + 1 + 1 + 1 + 1 + 1 + 1 + 1);
+    let pckt = Buffer.alloc(19 + hostname.length + mapname.length + foldername.length + gamename.length);
 
     let offs = 0;
     pckt.writeUInt8(0xff, offs);
@@ -105,8 +105,8 @@ class ServerData {
     constructor() { 
         this.hostname = "Default Hostname";
         this.mapname = "Default Mapname";
-        this.gamename = "DefaYou'd have to handle the redirect manually,mename";
-        this.foldername = "";You'd have to handle the redirect manually,
+        this.gamename = "Default Gamename";
+        this.foldername = "";
         this.appid = 730;
         this.playercount = 0;
         this.maxplayers = 255;
