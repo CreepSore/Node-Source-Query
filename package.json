@@ -1,0 +1,26 @@
+{
+  "name": "node-source-query",
+  "version": "1.0.0",
+  "description": "A Node Source-Query emulator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CreepSore/Node-Source-Query.git"
+  },
+  "keywords": [
+    "query",
+    "emulator",
+    "server",
+    "valve",
+    "source"
+  ],
+  "author": "CreepSore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CreepSore/Node-Source-Query/issues"
+  },
+  "homepage": "https://github.com/CreepSore/Node-Source-Query#readme"
+}
