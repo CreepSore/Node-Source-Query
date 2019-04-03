@@ -30,7 +30,7 @@ let onPacket = function(msg, remote) {
 }
 
 let handlePacket = function(pckt, remote) {
-    let sckt = dgram.createSocket("udp4", () => {});
+    let sckt = dgram.createSocket("udp4");
     if(pckt.startsWith("TSource Engine Query")) {
         let toSend = constructQueryPacketByServerData(DEFAULT_SERVERDATA);
         sckt.send(toSend, remote.port, remote.address, (e, b) => {
@@ -105,8 +105,8 @@ class ServerData {
     constructor() { 
         this.hostname = "Default Hostname";
         this.mapname = "Default Mapname";
-        this.gamename = "Default Gamename";
-        this.foldername = "";
+        this.gamename = "DefaYou'd have to handle the redirect manually,mename";
+        this.foldername = "";You'd have to handle the redirect manually,
         this.appid = 730;
         this.playercount = 0;
         this.maxplayers = 255;
