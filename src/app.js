@@ -2,28 +2,20 @@
 let EnumEnvironments = require("./EnumEnvironments.js");
 let EnumServerTypes = require("./EnumServerTypes.js");
 let ServerData = require("./ServerData.js");
+let Player = require("./Player.js");
 
 let dgram = require("dgram");
+let fs = require("fs");
 
-const DEFAULT_SERVERDATA = new ServerData();
+let SERVERDATA = new ServerData();
 const PORT = 27016;
 const SOCKET = dgram.createSocket("udp4");
 
 let init = function() {
-    DEFAULT_SERVERDATA.hostname = "[Lambda-Soft] Mari0 Kart 64";
-    DEFAULT_SERVERDATA.gamename = "Mario Kart 64";
-    DEFAULT_SERVERDATA.mapname = "Rainbow Road";
-    DEFAULT_SERVERDATA.playercount = 7;
-    DEFAULT_SERVERDATA.maxplayers = 8;
-    DEFAULT_SERVERDATA.isVAC = false;
-    DEFAULT_SERVERDATA.isPrivate = true;
-    DEFAULT_SERVERDATA.botcount = 6;
+    let file = fs.readFileSync(__dirname + "/../config/config.json", "utf8");
+    SERVERDATA = JSON.parse(file);
 
     SOCKET.on("message", onPacket);
-    SOCKET.on("listening", () => {
-        let addr = SOCKET.address();
-        console.log(`Started listening on ${addr.address}:${addr.port}`)
-    })
     SOCKET.bind(PORT);
 }
 
@@ -40,10 +32,15 @@ let onPacket = function(msg, remote) {
 let handlePacket = function(pckt, remote) {
     let sckt = SOCKET;
     if(pckt.startsWith("TSource Engine Query")) {
-        let toSend = constructQueryPacketByServerData(DEFAULT_SERVERDATA);
+        let toSend = constructQueryPacketByServerData(SERVERDATA);
         sckt.send(toSend, remote.port, remote.address, (e, b) => {
             if(e) console.log(e);
         });
+    } else if(pckt.startsWith("U")) {
+        let toSend = constructPlayerPacketByServerData(SERVERDATA);
+        sckt.send(toSend, remote.port, remote.address, (e, b) => {
+            if(e) console.log(e);
+        })
     }
 }
 
@@ -52,6 +49,47 @@ let constructQueryPacketByServerData = function(serverData) {
         serverData.foldername, serverData.appid, serverData.playercount, serverData.maxplayers,
         serverData.botcount, serverData.environment, serverData.servertype, serverData.isPrivate,
         serverData.isVAC);
+}
+
+let constructPlayerPacketByServerData = function(serverData) {
+    return constructPlayerPacket(serverData.players);
+}
+
+let constructPlayerPacket = function(players) {
+    let neededSize = 6;
+    players.forEach(e => {
+        neededSize += 10;
+        neededSize += e.name.length;
+    });
+    
+    let offs = 0;
+    let pckt = Buffer.alloc(neededSize);
+    pckt.writeUInt8(0xFF, offs);
+    offs++;
+    pckt.writeUInt8(0xFF, offs);
+    offs++;
+    pckt.writeUInt8(0xFF, offs);
+    offs++;
+    pckt.writeUInt8(0xFF, offs);
+    offs++;
+    pckt.writeUInt8(0x44, offs);
+    offs++;
+    pckt.writeUInt8(players.length, offs);
+    offs++;
+    players.forEach(e => {
+        pckt.writeUInt8(e.index, offs);
+        offs++;
+        pckt.write(e.name, offs);
+        offs += e.name.length;
+        pckt.writeUInt8(0x0, offs);
+        offs++;
+        pckt.writeInt32LE(e.score, offs);
+        offs += 4;
+        pckt.writeFloatLE(e.time, offs);
+        offs += 4;
+    });
+
+    return pckt;
 }
 
 let constructQueryPacket = function(hostname, mapname, gamename, 

@@ -1,5 +1,6 @@
-let EnumEnvironments = require("./EnumEnvironments");
-let EnumServerTypes = require("./EnumServerTypes");
+let EnumEnvironments = require("./EnumEnvironments.js");
+let EnumServerTypes = require("./EnumServerTypes.js");
+let Player = require("./Player.js");
 
 class ServerData {
     constructor() { 
@@ -15,6 +16,7 @@ class ServerData {
         this.servertype = EnumServerTypes.DEDICATED;
         this.isPrivate = false;
         this.isVAC = true;
+        this.players = [];
     }
 }
 
