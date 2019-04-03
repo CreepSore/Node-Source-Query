@@ -1,4 +1,7 @@
 "use strict";
+let EnumEnvironments = require("./EnumEnvironments.js");
+let EnumServerTypes = require("./EnumServerTypes.js");
+
 let dgram = require("dgram");
 
 let DEFAULT_SERVERDATA;
@@ -118,16 +121,5 @@ class ServerData {
     }
 }
 
-let EnumServerTypes = {
-    DEDICATED: "d",
-    NONDEDICATED: "l",
-    SOURCETVRELAY: "p"
-}
-
-let EnumEnvironments = {
-    WINDOWS: "w",
-    LINUX: "l",
-    MAC: "m"
-}
 
 init();
