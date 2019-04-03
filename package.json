@@ -2,9 +2,10 @@
   "name": "node-source-query",
   "version": "1.0.0",
   "description": "A Node Source-Query emulator",
-  "main": "app.js",
+  "main": "./src/app.js",
+  "baseUrl": "src",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/CreepSore/Node-Source-Query/issues"
   },
-  "homepage": "https://github.com/CreepSore/Node-Source-Query#readme"
+  "homepage": "https://github.com/CreepSore/Node-Source-Query#readme",
+  "devDependencies": {
+    "@types/node": "^11.13.0"
+  }
 }
