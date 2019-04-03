@@ -1,5 +1,5 @@
 # Node-Source-Query  
-##⚙ A Node Source-Query emulator ⚙  
+### ⚙ A Node Source-Query emulator ⚙  
   
 ### 🖼 Screenshots 🖼
 ![ScreenShot1](https://github.com/CreepSore/Node-Source-Query/blob/master/.resources/screenshot_main.png)
