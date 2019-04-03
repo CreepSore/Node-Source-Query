@@ -7,16 +7,22 @@ let Player = require("./Player.js");
 let dgram = require("dgram");
 let fs = require("fs");
 
-let SERVERDATA = new ServerData();
-const PORT = 27016;
+let config;
+let SERVERDATA;
+let PORT;
+let ADDRMASK;
+
 const SOCKET = dgram.createSocket("udp4");
 
 let init = function() {
     let file = fs.readFileSync(__dirname + "/../config/config.json", "utf8");
-    SERVERDATA = JSON.parse(file);
+    config = JSON.parse(file);
+    SERVERDATA = config.Serverdata;
+    PORT = config.Connection.port;
+    ADDRMASK = config.Connection.mask;
 
     SOCKET.on("message", onPacket);
-    SOCKET.bind(PORT);
+    SOCKET.bind(PORT, ADDRMASK);
 }
 
 let onPacket = function(msg, remote) {
