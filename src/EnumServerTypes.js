@@ -1,7 +1,5 @@
-let EnumServerTypes = {
+module.exports = {
     DEDICATED: "d",
     NONDEDICATED: "l",
     SOURCETVRELAY: "p"
-}
-
-module.exports = EnumServerTypes;
+};

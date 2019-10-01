@@ -1,7 +1,5 @@
-let EnumEnvironments = {
+module.exports = {
     WINDOWS: "w",
     LINUX: "l",
     MAC: "m"
-}
-
-module.exports = EnumEnvironments;
+};

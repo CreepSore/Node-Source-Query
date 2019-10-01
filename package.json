@@ -1,6 +1,6 @@
 {
   "name": "node-source-query",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Node Source-Query emulator",
   "main": "./src/app.js",
   "baseUrl": "src",
@@ -26,5 +26,8 @@
   "homepage": "https://github.com/CreepSore/Node-Source-Query#readme",
   "devDependencies": {
     "@types/node": "^11.13.0"
+  },
+  "dependencies": {
+    "smart-buffer": "^4.1.0"
   }
 }

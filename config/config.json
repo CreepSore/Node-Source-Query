@@ -1,9 +1,9 @@
 {
-    "Connection": {
+    "connection": {
         "port": 27016,
         "mask": "0.0.0.0"
     },
-    "Serverdata": {
+    "serverdata": {
         "appid": 730,
         "environment": "l",
         "servertype": "d",
