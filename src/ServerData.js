@@ -1,6 +1,5 @@
-let EnumEnvironments = require("./EnumEnvironments.js");
-let EnumServerTypes = require("./EnumServerTypes.js");
-let Player = require("./Player.js");
+const EnumEnvironments = require("./EnumEnvironments.js");
+const EnumServerTypes = require("./EnumServerTypes.js");
 
 class ServerData {
     constructor() { 
