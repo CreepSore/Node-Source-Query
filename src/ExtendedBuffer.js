@@ -11,7 +11,7 @@ module.exports = class ExtendedBuffer extends Buffer {
 	static alloc(size, fill, encoding) {
 		/** @type {ExtendedBuffer} */
 		// @ts-ignore
-		let buffer = Buffer.alloc(size, fill, encoding);
+		const buffer = Buffer.alloc(size, fill, encoding);
 		Object.setPrototypeOf(buffer, ExtendedBuffer.prototype);
 		buffer.currentIndex = 0;
 		return buffer;
@@ -25,7 +25,7 @@ module.exports = class ExtendedBuffer extends Buffer {
 	static allocUnsafe(size) {
 		/** @type {ExtendedBuffer} */
 		// @ts-ignore
-		let buffer = Buffer.allocUnsafe(size);
+		const buffer = Buffer.allocUnsafe(size);
 		Object.setPrototypeOf(buffer, ExtendedBuffer.prototype);
 		buffer.currentIndex = 0;
 		return buffer;
@@ -38,7 +38,7 @@ module.exports = class ExtendedBuffer extends Buffer {
 	static allocUnsafeSlow(size) {
 		/** @type {ExtendedBuffer} */
 		// @ts-ignore
-		let buffer = Buffer.allocUnsafeSlow(size);
+		const buffer = Buffer.allocUnsafeSlow(size);
 		Object.setPrototypeOf(buffer, ExtendedBuffer.prototype);
 		buffer.currentIndex = 0;
 		return buffer;

@@ -1,16 +1,17 @@
 let ExtendedBuffer = require("./ExtendedBuffer.js");
+let ServerData = require("./ServerData.js");
 
 module.exports = class PacketFactory {
-    static constructPlayerPacket(serverdata) {
-        let players = serverdata.players;
+	/**
+	 * @static
+	 * @param {ServerData} serverdata
+	 * @return {Buffer}
+	 */
+	static constructPlayerPacket(serverdata) {
+        const players = serverdata.players;
+        const neededSize = 6 + players.map(p => p.name.length + 10).reduce((a, b) => a + b, 0);
 
-        let neededSize = 6;
-        players.forEach(e => {
-            neededSize += 10;
-            neededSize += e.name.length;
-        });
-
-        let packetBuffer = ExtendedBuffer.alloc(neededSize);
+        const packetBuffer = ExtendedBuffer.alloc(neededSize);
         packetBuffer.appendUInt8(0xFF);
         packetBuffer.appendUInt8(0xFF);
         packetBuffer.appendUInt8(0xFF);
@@ -28,14 +29,19 @@ module.exports = class PacketFactory {
         return packetBuffer;
     };
 
+	/**
+	 * @static
+	 * @param {ServerData} serverdata
+	 * @return {Buffer}
+	 */
     static constructQueryPacket(serverdata) {
-        let {
+        const {
             hostname, mapname, gamename, foldername,
             appid, playercount, maxplayers, botcount,
             environment, servertype, isPrivate, isVAC
         } = serverdata;
 
-        let packetBuffer = ExtendedBuffer.alloc(19 + hostname.length + mapname.length + foldername.length + gamename.length);
+        const packetBuffer = ExtendedBuffer.alloc(19 + hostname.length + mapname.length + foldername.length + gamename.length);
         packetBuffer.appendUInt8(0xff);
         packetBuffer.appendUInt8(0xff);
         packetBuffer.appendUInt8(0xff);

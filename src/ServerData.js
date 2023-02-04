@@ -1,8 +1,9 @@
-const EnumEnvironments = require("./EnumEnvironments.js");
-const EnumServerTypes = require("./EnumServerTypes.js");
+let Player = require("./Player.js");
+let EnumEnvironments = require("./EnumEnvironments.js");
+let EnumServerTypes = require("./EnumServerTypes.js");
 
 class ServerData {
-    constructor() { 
+    constructor() {
         this.hostname = "Default Hostname";
         this.mapname = "Default Mapname";
         this.gamename = "Default Gamename";
@@ -15,6 +16,7 @@ class ServerData {
         this.servertype = EnumServerTypes.DEDICATED;
         this.isPrivate = false;
         this.isVAC = true;
+		/** @type {Player[]} */
         this.players = [];
     }
 }
