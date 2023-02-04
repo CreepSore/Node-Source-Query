@@ -1,4 +1,4 @@
-const SmartBuffer = require('smart-buffer').SmartBuffer;
+let ExtendedBuffer = require("./ExtendedBuffer.js");
 
 module.exports = class PacketFactory {
     static constructPlayerPacket(serverdata) {
@@ -10,22 +10,22 @@ module.exports = class PacketFactory {
             neededSize += e.name.length;
         });
 
-        let packetBuffer = SmartBuffer.fromBuffer(Buffer.alloc(neededSize));
-        packetBuffer.writeUInt8(0xFF);
-        packetBuffer.writeUInt8(0xFF);
-        packetBuffer.writeUInt8(0xFF);
-        packetBuffer.writeUInt8(0xFF);
-        packetBuffer.writeUInt8(0x44);
-        packetBuffer.writeUInt8(players.length);
+        let packetBuffer = ExtendedBuffer.alloc(neededSize);
+        packetBuffer.appendUInt8(0xFF);
+        packetBuffer.appendUInt8(0xFF);
+        packetBuffer.appendUInt8(0xFF);
+        packetBuffer.appendUInt8(0xFF);
+        packetBuffer.appendUInt8(0x44);
+        packetBuffer.appendUInt8(players.length);
         players.forEach(e => {
-            packetBuffer.writeUInt8(e.index);
-            packetBuffer.writeString(e.name);
-            packetBuffer.writeUInt8(0x0);
-            packetBuffer.writeInt32LE(e.score);
-            packetBuffer.writeFloatLE(e.time);
+            packetBuffer.appendUInt8(e.index);
+            packetBuffer.appendString(e.name);
+            packetBuffer.appendUInt8(0x0);
+            packetBuffer.appendInt32LE(e.score);
+            packetBuffer.appendFloatLE(e.time);
         });
 
-        return packetBuffer.toBuffer();
+        return packetBuffer;
     };
 
     static constructQueryPacket(serverdata) {
@@ -35,30 +35,30 @@ module.exports = class PacketFactory {
             environment, servertype, isPrivate, isVAC
         } = serverdata;
 
-        let packetBuffer = SmartBuffer.fromBuffer(Buffer.alloc(19 + hostname.length + mapname.length + foldername.length + gamename.length));
-        packetBuffer.writeUInt8(0xff);
-        packetBuffer.writeUInt8(0xff);
-        packetBuffer.writeUInt8(0xff);
-        packetBuffer.writeUInt8(0xff);
-        packetBuffer.writeUInt8(0x49);
-        packetBuffer.writeUInt8(0x11);
-        packetBuffer.writeString(hostname);
-        packetBuffer.writeUInt8(0x00);
-        packetBuffer.writeString(mapname);
-        packetBuffer.writeUInt8(0x00);
-        packetBuffer.writeString(foldername);
-        packetBuffer.writeUInt8(0x00);
-        packetBuffer.writeString(gamename);
-        packetBuffer.writeUInt8(0x00);
-        packetBuffer.writeInt16BE(appid);
-        packetBuffer.writeUInt8(playercount);
-        packetBuffer.writeUInt8(maxplayers);
-        packetBuffer.writeUInt8(botcount);
-        packetBuffer.writeString(servertype);
-        packetBuffer.writeString(environment);
-        packetBuffer.writeString(isPrivate ? "1" : "0");
-        packetBuffer.writeString(isVAC ? "1" : "0");
+        let packetBuffer = ExtendedBuffer.alloc(19 + hostname.length + mapname.length + foldername.length + gamename.length);
+        packetBuffer.appendUInt8(0xff);
+        packetBuffer.appendUInt8(0xff);
+        packetBuffer.appendUInt8(0xff);
+        packetBuffer.appendUInt8(0xff);
+        packetBuffer.appendUInt8(0x49);
+        packetBuffer.appendUInt8(0x11);
+        packetBuffer.appendString(hostname);
+        packetBuffer.appendUInt8(0x00);
+        packetBuffer.appendString(mapname);
+        packetBuffer.appendUInt8(0x00);
+        packetBuffer.appendString(foldername);
+        packetBuffer.appendUInt8(0x00);
+        packetBuffer.appendString(gamename);
+        packetBuffer.appendUInt8(0x00);
+        packetBuffer.appendInt16BE(appid);
+        packetBuffer.appendUInt8(playercount);
+        packetBuffer.appendUInt8(maxplayers);
+        packetBuffer.appendUInt8(botcount);
+        packetBuffer.appendString(servertype);
+        packetBuffer.appendString(environment);
+        packetBuffer.appendString(isPrivate ? "1" : "0");
+        packetBuffer.appendString(isVAC ? "1" : "0");
 
-        return packetBuffer.toBuffer();
+        return packetBuffer;
     };
 };

@@ -2,7 +2,7 @@
 ### ⚙ A Node Source-Query emulator ⚙  
 
 ### Dependencies
-* [smart-buffer](https://www.npmjs.com/package/smart-buffer)
+**None**
 
 ### 🖼 Screenshots 🖼
 ![ScreenShot1](https://github.com/CreepSore/Node-Source-Query/blob/master/.resources/screenshot_main.png)

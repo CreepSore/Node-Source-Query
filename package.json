@@ -26,8 +26,5 @@
   "homepage": "https://github.com/CreepSore/Node-Source-Query#readme",
   "devDependencies": {
     "@types/node": "^11.13.0"
-  },
-  "dependencies": {
-    "smart-buffer": "^4.1.0"
   }
 }
